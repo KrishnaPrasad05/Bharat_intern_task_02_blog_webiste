@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        .list-group-item{
+            margin-top: 20px;
+            box-shadow: 3px 3px 7px grey;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Blog website</h1>
+        <a href="/new"><button class="btn btn-success">New article</button></a>
+        <div id="articles" class="list-group"></div>
+    </div>
+    
+    <script>
+        async function loadArticles(){
+            const response = await fetch('/api/article');
+            const articles = await response.json();
+            const articlesDiv = document.getElementById('articles');
+            articlesDiv.innerHTML='';
+
+            articles.forEach(article => {
+                const articlesElement = document.createElement('div');
+                articlesElement.className='list-group-item';
+                
+           
+
+                articlesElement.innerHTML = `
+                    <h5>${article.title}</h5>
+                    <p class="text-muted">${article.createdAt.substring(0,10)}</p>
+                    <p>${article.description}</p>
+                    <a href="/view/${article._id}"><button class="btn btn-secondary">Read article</button></a>
+                    <a href="/update/${article._id}"><button class="btn btn-info">Update</button></a>
+                    <button class="btn btn-danger" onclick="deleteArticle('${article._id}')">Delete</button>
+                `;
+                articlesDiv.appendChild(articlesElement);
+            });
+        }
+
+        async function deleteArticle(articleId){
+            await fetch(`/api/article/${articleId}`, {method: 'DELETE'});
+            loadArticles();
+        }
+
+        loadArticles();
+    </script>
+</body>
+</html>

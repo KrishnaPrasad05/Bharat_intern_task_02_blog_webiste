@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h3 id="title"></h3>
+        <a href="/"><button class="btn btn-info">All articles</button></a>
+        <a id="view-article"><button class="btn btn-secondary">Edit article</button></a>
+        <p id="description"></p>
+        <div id="content"></div> <!-- Use a div for rich text content -->
+    </div>
+
+    <script>
+        async function loadArticle() {
+            const viewArticle = document.getElementById('view-article');
+            const articleId = window.location.pathname.split('/').pop();
+            console.log('Article ID:', articleId); // Log the article ID
+            const response = await fetch(`/api/article/${articleId}`);
+            
+            if (response.ok) {
+                const article = await response.json();
+                console.log('Article data:', article); // Log the article data
+
+                const title = document.getElementById('title');
+                const content = document.getElementById('content');
+                const description = document.getElementById('description');
+
+                viewArticle.href = `/update/${article._id}`;
+                title.textContent = article.title;
+                description.textContent = article.description;
+
+                // Use innerHTML to render Markdown as HTML
+                content.innerHTML = marked.parse(article.content);
+                console.log('Formatted HTML:', marked(article.content)); // Log the formatted HTML
+            } else {
+                console.error('Failed to load article:', response.statusText);
+            }
+        }
+        loadArticle();
+    </script>
+</body>
+</html>
