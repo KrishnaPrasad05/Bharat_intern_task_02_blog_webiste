@@ -4,16 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+      body{
+    background: linear-gradient(180deg,rgb(191, 245, 255),rgb(255, 255, 255));
+    min-height: 100vh;
+}
+.content-container{
+   
+    
+    background-color: white;
+    border: 1px solid black;
+    
+    border-radius: 15px;
+    box-shadow: 3px 3px 7px grey;
+}
+#content{
+    height: 500px;
+    margin: 15px 20px;
+    overflow-y: scroll;
+}
+
+::-webkit-scrollbar {
+  width: 8px;  
+  height: 8px; 
+}
+
+
+::-webkit-scrollbar-track {
+  background: #ddf2f3; 
+  border-radius: 10px; 
+}
+
+
+::-webkit-scrollbar-thumb {
+  background: #465b89; 
+  border-radius: 10px; 
+}
+
+
+::-webkit-scrollbar-thumb:hover {
+  background: #263a63; 
+}
+
+    </style>
 </head>
 <body>
     <div class="container">
-        <h3 id="title"></h3>
+        <h3 id="title" style="color: darkblue;margin:1rem 0rem;font-weight: 600;font-size: 2rem;"></h3>
         <a href="/"><button class="btn btn-info">All articles</button></a>
         <a id="view-article"><button class="btn btn-secondary">Edit article</button></a>
-        <p id="description"></p>
-        <div id="content"></div> <!-- Use a div for rich text content -->
+        <p id="description" style="margin: 1rem 0rem;"></p>
+        <div class="content-container">
+            <div id="content"></div> <!-- Use a div for rich text content -->
+        </div>
+        
     </div>
 
     <script>

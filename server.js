@@ -12,6 +12,7 @@ dotenv.config()
 //use cors,json
 app.use(cors())
 app.use(express.json())
+app.use(express.static('view'))
 
 //connect to mongodb
 mongoose.connect(process.env.MONGO_URI)

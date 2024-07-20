@@ -2,11 +2,12 @@ const Article = require('../model/Article')
 
 exports.addArticle = async(req,res)=>{
     try{
-        const {title,content}=req.body;
+        const {title,content,description}=req.body;
 
         const newArticle = new Article({
             title,
-            content
+            content,
+            description
         })
         const saveArticle = await newArticle.save()
         return res.status(201).json(saveArticle)
